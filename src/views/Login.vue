@@ -1,37 +1,72 @@
 <template>
   <div class="parent">
-    <div class="login-form">
+    <form class="login-form" @submit.prevent="auth()">
       <h1>Account Login</h1>
       <div class="login-data">
         <div class="data-field">
-          <input type="text" v-model="userName" placeholder="Email" required >
+          <small for="email" v-if="$v.email.$dirty && !$v.email.required">Email must be required</small>
+          <small for="email" v-else-if="$v.email.$dirty && !$v.email.email">Input correct email</small>
+          <input
+          id="email"
+          type="text"
+          v-model.trim="email"
+          placeholder="Email"
+          :class="{ invalid: ($v.email.$dirty && !$v.email.required) || ($v.email.$dirty && !$v.email.email) }"
+          >
         </div>
         <div class="data-field">
-          <input type="password" v-model ="password" placeholder="Password" required>
+          <small for="password" v-if="$v.password.$dirty && !$v.password.required">Password must be required</small>
+          <small for="password" v-else-if="$v.password.$dirty && !$v.password.minLength">
+            Input correct password (length more than {{$v.password.$params.minLength.min}})
+          </small>
+          <input
+          id="password"
+          type="password"
+          v-model ="password"
+          placeholder="Password"
+          :class="{ invalid: ($v.password.$dirty && !$v.password.required) || ($v.password.$dirty && !$v.password.minLength) }"
+          >
         </div>
-        <button type="submit" @click="auth()">login</button>
+        <button type="submit">login</button>
         <p>Create an Account? <router-link to="/registry">Sign up</router-link></p>
       </div>
-    </div>
+    </form>
   </div>
 </template>
 <script>
+import { email, required, minLength } from 'vuelidate/lib/validators'
+
 export default {
-  name: 'Login',
-  data () {
-    return {
-      userName: '',
-      password: ''
-    }
+  name: 'login',
+  data: () => ({
+    email: '',
+    password: ''
+  }),
+  validations: {
+    email: { email, required },
+    password: { required, minLength: minLength(6) }
   },
   methods: {
     auth () {
+      if (this.$v.$invalid) {
+        this.$v.$touch()
+        return
+      }
       this.$store.dispatch('loginUser', { email: this.$data.userName, password: this.$data.password })
     }
   }
 }
 </script>
 <style lang="sass" scoped>
+.invalid
+  border: 1px solid red
+
+small
+  color: red
+  font-family: "Roboto", sans-serif
+  font-size: 12px
+  font-weight: 400
+
 .login-form
   width: 300px
   margin: auto

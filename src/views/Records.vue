@@ -56,7 +56,7 @@ export default {
       this.$store.dispatch('deleteRecord', id)
     },
     signOut () {
-      console.log("OUT")
+      console.log('OUT')
       localStorage.removeItem('user-token')
       this.$router.push({ name: 'login' })
     }
