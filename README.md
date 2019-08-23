@@ -1,29 +1,12 @@
-# test-app
+Исходный код приложения "test-app"
+Просмотреть работу приложения можно по ссылке: https://demina97.github.io/test-app/
 
-## Project setup
-```
-npm install
-```
+Согласно предоставленному API (https://reqres.in/) приложение имеет ограниченное количество данных для входа и регистрации
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+Корректные данные для входа:
+Email : eve.holt@reqres.in
+Пароль : cityslicka
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Корректные данные для регистрации:
+Email :eve.holt@reqres.in
+Пароль : pistol
