@@ -63,13 +63,6 @@ export default {
         this.$v.$touch()
         return
       }
-      if (this.confirmedPassword === this.password) {
-        this.$store.dispatch('registryUser', { email: this.$data.userName, password: this.$data.password })
-      } else {
-        alert("Passwords don't match!")
-        this.password = ''
-        this.confirmedPassword = ''
-      }
     }
   }
 }
